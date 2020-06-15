@@ -29,6 +29,7 @@ func echo(conn net.Conn) {
 		if _, err := conn.Write(b[0:size]); err != nil {
 			log.Fatalln("Unable to write data")
 		}
+	}
 }
 
 func main() {
