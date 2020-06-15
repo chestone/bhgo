@@ -12,7 +12,6 @@ func echo(conn net.Conn) {
 	b := make([]byte, 512)
 	for {
 		// Receive data via conn.Read into a buffer
-
 		size, err := conn.Read(b[0:])
 		if err == io.EOF {
 			log.Println("Client Disconnected")
