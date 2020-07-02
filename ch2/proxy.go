@@ -1,10 +1,13 @@
+package main
+
 import (
-	"net"
+	"io"
 	"log"
+	"net"
 )
 
 func handle(src net.Conn) {
-	dst, err := net.Dial("tcp", "joescatcam.website:80")
+	dst, err := net.Dial("tcp", "google.com:80")
 	if err != nil {
 		log.Fatalln("Unable to connect to our unreachable host")
 	}
@@ -22,20 +25,20 @@ func handle(src net.Conn) {
 	if _, err := io.Copy(src, dst); err != nil {
 		log.Fatalln(err)
 	}
+}
 
-	func main () {
-		// Listen on local port 80
-		listener, err := net.Listen("tcp", ":80")
+func main() {
+	// Listen on local port 80
+	listener, err := net.Listen("tcp", ":80")
+	if err != nil {
+		log.Fatalln("Unable to bind to port")
+	}
+
+	for {
+		conn, err := listener.Accept()
 		if err != nil {
-			log.Fatalln("Unable to bind to port")
+			log.Fatalln("Unable to accept conenction")
 		}
-
-		for {
-			conn, err := listener.Accept()
-			if err != nil {
-				log.Fatalln("Unable to accept conenction")
-			}
-			go handle(conn)
-		}
+		go handle(conn)
 	}
 }
